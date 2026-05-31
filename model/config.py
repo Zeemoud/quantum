@@ -9,10 +9,10 @@ from dataclasses import dataclass
 @dataclass
 class QuantumConfig:
     # Vocabulary
-    vocab_size: int = 8000          # Number of tokens in the vocabulary
+    vocab_size: int = 8000  # Number of tokens in the vocabulary
     pad_token_id: int = 0
-    bos_token_id: int = 1           # Beginning of sequence
-    eos_token_id: int = 2           # End of sequence
+    bos_token_id: int = 1  # Beginning of sequence
+    eos_token_id: int = 2  # End of sequence
 
     # Architecture
     d_model: int = 512
@@ -24,7 +24,7 @@ class QuantumConfig:
     dropout: float = 0.1
 
     # Training
-    batch_size: int = 16        # Réduit de 64 à 16
+    batch_size: int = 16  # Réduit de 64 à 16
     learning_rate: float = 3e-4
     weight_decay: float = 0.01
     warmup_steps: int = 500

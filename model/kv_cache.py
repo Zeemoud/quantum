@@ -12,7 +12,7 @@ class KVCache:
     max_batch_size: int
     max_seq_len: int
     n_layers: int
-    n_kv_heads: int          # GQA — fewer KV heads than Q heads
+    n_kv_heads: int  # GQA — fewer KV heads than Q heads
     d_head: int
     device: torch.device
 
@@ -32,10 +32,10 @@ class KVCache:
         v: torch.Tensor,
     ) -> tuple[torch.Tensor, torch.Tensor]:
         B, H, T, D = k.shape
-        self.k_cache[layer][:B, :, self.current_len:self.current_len + T, :] = k
-        self.v_cache[layer][:B, :, self.current_len:self.current_len + T, :] = v
-        k_full = self.k_cache[layer][:B, :, :self.current_len + T, :]
-        v_full = self.v_cache[layer][:B, :, :self.current_len + T, :]
+        self.k_cache[layer][:B, :, self.current_len : self.current_len + T, :] = k
+        self.v_cache[layer][:B, :, self.current_len : self.current_len + T, :] = v
+        k_full = self.k_cache[layer][:B, :, : self.current_len + T, :]
+        v_full = self.v_cache[layer][:B, :, : self.current_len + T, :]
         return k_full, v_full
 
     def advance(self, n: int = 1):

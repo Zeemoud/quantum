@@ -32,7 +32,7 @@ def generate(model, tokenizer, device, prompt: str, max_tokens: int = 80) -> str
         for _ in range(max_tokens):
             idx = torch.tensor([generated], dtype=torch.long, device=device)
             if idx.shape[1] > CONFIG.max_seq_len:
-                idx = idx[:, -CONFIG.max_seq_len:]
+                idx = idx[:, -CONFIG.max_seq_len :]
             logits = model(idx)
             last_logits = logits[:, -1, :] / 0.8
             values, _ = torch.topk(last_logits, 50)
@@ -73,7 +73,7 @@ def main():
 
     for prompt in prompts:
         print(f"{'─' * 60}")
-        print(f"Prompt: \"{prompt}\"\n")
+        print(f'Prompt: "{prompt}"\n')
         out_a = generate(model_a, tok_a, dev_a, prompt, args.tokens)
         out_b = generate(model_b, tok_b, dev_b, prompt, args.tokens)
         print(f"[A step={step_a}]\n{out_a}\n")

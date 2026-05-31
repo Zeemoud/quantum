@@ -121,7 +121,7 @@ class QuantumTokenizer:
                 i = 0
                 while i < len(word_tokens) - 1:
                     if word_tokens[i] == merge[0] and word_tokens[i + 1] == merge[1]:
-                        word_tokens = word_tokens[:i] + ["".join(merge)] + word_tokens[i + 2:]
+                        word_tokens = word_tokens[:i] + ["".join(merge)] + word_tokens[i + 2 :]
                     else:
                         i += 1
             tokens.extend(word_tokens)

@@ -16,7 +16,7 @@ class FeedForward(nn.Module):
     def __init__(self, d_model: int, d_ff: int, dropout: float = 0.1):
         super().__init__()
         self.gate = nn.Linear(d_model, d_ff, bias=False)
-        self.up   = nn.Linear(d_model, d_ff, bias=False)
+        self.up = nn.Linear(d_model, d_ff, bias=False)
         self.down = nn.Linear(d_ff, d_model, bias=False)
         self.dropout = nn.Dropout(dropout)
 
@@ -29,8 +29,11 @@ class TransformerBlock(nn.Module):
     def __init__(self, config: QuantumConfig):
         super().__init__()
         self.attn = MultiHeadAttention(
-            config.d_model, config.n_heads, config.n_kv_heads,
-            config.max_seq_len, config.dropout,
+            config.d_model,
+            config.n_heads,
+            config.n_kv_heads,
+            config.max_seq_len,
+            config.dropout,
         )
         self.ff = FeedForward(config.d_model, config.d_ff, config.dropout)
         self.norm1 = RMSNorm(config.d_model)
@@ -56,9 +59,7 @@ class QuantumModel(nn.Module):
         self.token_emb = nn.Embedding(config.vocab_size, config.d_model)
         self.dropout = nn.Dropout(config.dropout)
 
-        self.blocks = nn.ModuleList(
-            [TransformerBlock(config) for _ in range(config.n_layers)]
-        )
+        self.blocks = nn.ModuleList([TransformerBlock(config) for _ in range(config.n_layers)])
 
         self.norm = RMSNorm(config.d_model)
         self.head = nn.Linear(config.d_model, config.vocab_size, bias=False)

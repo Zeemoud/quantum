@@ -27,6 +27,7 @@ def get_device() -> torch.device:
 def get_lr(step: int, config: QuantumConfig) -> float:
     """Linear warmup then cosine decay."""
     import math
+
     if step < config.warmup_steps:
         return config.learning_rate * step / max(1, config.warmup_steps)
     progress = (step - config.warmup_steps) / max(1, config.max_steps - config.warmup_steps)
@@ -35,12 +36,15 @@ def get_lr(step: int, config: QuantumConfig) -> float:
 
 def save_checkpoint(model: nn.Module, step: int, loss: float, path: str):
     Path(path).parent.mkdir(parents=True, exist_ok=True)
-    torch.save({
-        "step": step,
-        "model_state": model.state_dict(),
-        "loss": loss,
-        "config": model.config,
-    }, path)
+    torch.save(
+        {
+            "step": step,
+            "model_state": model.state_dict(),
+            "loss": loss,
+            "config": model.config,
+        },
+        path,
+    )
     print(f"  ✓ Checkpoint saved → {path}")
 
 
@@ -105,7 +109,7 @@ def train():
     criterion = nn.CrossEntropyLoss(ignore_index=CONFIG.pad_token_id)
 
     # Mixed precision scaler (CUDA only)
-    scaler = torch.amp.GradScaler('cuda', enabled=use_amp)
+    scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
 
     # Gradient accumulation — simulate larger batch size
     # Effective batch size = batch_size × accumulation_steps
@@ -129,7 +133,7 @@ def train():
                 group["lr"] = lr
 
             # Forward pass with mixed precision
-            with torch.amp.autocast('cuda', enabled=use_amp):
+            with torch.amp.autocast("cuda", enabled=use_amp):
                 logits = model(x)
                 loss = criterion(logits.view(-1, logits.size(-1)), y.view(-1))
                 loss = loss / accumulation_steps  # Normalize for accumulation

@@ -17,6 +17,7 @@ from pathlib import Path
 # Cleaning
 # ---------------------------------------------------------------------------
 
+
 def clean_text(text: str) -> str:
     """Remove wiki markup, extra whitespace, and garbage lines."""
     # Remove HTML tags
@@ -42,6 +43,7 @@ def clean_text(text: str) -> str:
 
 WIKI_API = "https://{lang}.wikipedia.org/w/api.php"
 
+
 def fetch_wikipedia_articles(lang: str, max_articles: int) -> list[str]:
     """Fetch random Wikipedia articles via the API."""
     print(f"  Fetching Wikipedia ({lang})...")
@@ -59,6 +61,7 @@ def fetch_wikipedia_articles(lang: str, max_articles: int) -> list[str]:
             req = urllib.request.Request(url, headers={"User-Agent": "QuantumAI/0.1"})
             with urllib.request.urlopen(req, timeout=15) as r:
                 import json
+
                 data = json.loads(r.read().decode())
             pages = data.get("query", {}).get("pages", {}).values()
             for page in pages:
@@ -104,6 +107,7 @@ GUTENBERG_BOOKS = {
 
 GUTENBERG_URL = "https://www.gutenberg.org/cache/epub/{id}/pg{id}.txt"
 
+
 def fetch_gutenberg_books(lang: str) -> list[str]:
     """Download books from Project Gutenberg."""
     print(f"  Fetching Gutenberg ({lang})...")
@@ -120,7 +124,7 @@ def fetch_gutenberg_books(lang: str) -> list[str]:
             start = raw.find("*** START OF")
             end = raw.find("*** END OF")
             if start != -1:
-                raw = raw[start + 50:]
+                raw = raw[start + 50 :]
             if end != -1:
                 raw = raw[:end]
             cleaned = clean_text(raw)
@@ -137,10 +141,12 @@ def fetch_gutenberg_books(lang: str) -> list[str]:
 # Main
 # ---------------------------------------------------------------------------
 
+
 def main():
     parser = argparse.ArgumentParser(description="Prepare Quantum training data")
-    parser.add_argument("--max-articles", type=int, default=2000,
-                        help="Number of Wikipedia articles per language (default: 2000)")
+    parser.add_argument(
+        "--max-articles", type=int, default=2000, help="Number of Wikipedia articles per language (default: 2000)"
+    )
     parser.add_argument("--lang", choices=["fr", "en", "both"], default="both")
     parser.add_argument("--output", type=str, default="data")
     args = parser.parse_args()

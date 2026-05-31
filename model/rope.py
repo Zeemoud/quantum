@@ -22,16 +22,19 @@ def precompute_freqs(d_head: int, max_seq_len: int, base: float = 10000.0) -> tu
 
 def apply_rope(x: torch.Tensor, cos: torch.Tensor, sin: torch.Tensor, offset: int = 0) -> torch.Tensor:
     T = x.shape[2]
-    cos = cos[offset:offset + T].unsqueeze(0).unsqueeze(0)
-    sin = sin[offset:offset + T].unsqueeze(0).unsqueeze(0)
+    cos = cos[offset : offset + T].unsqueeze(0).unsqueeze(0)
+    sin = sin[offset : offset + T].unsqueeze(0).unsqueeze(0)
 
     x1 = x[..., ::2]
     x2 = x[..., 1::2]
 
-    x_rotated = torch.stack([
-        x1 * cos - x2 * sin,
-        x1 * sin + x2 * cos,
-    ], dim=-1)
+    x_rotated = torch.stack(
+        [
+            x1 * cos - x2 * sin,
+            x1 * sin + x2 * cos,
+        ],
+        dim=-1,
+    )
 
     return x_rotated.flatten(-2)
 

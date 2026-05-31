@@ -19,7 +19,7 @@ class TextDataset(Dataset):
     def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
         chunk = self.data[idx : idx + self.seq_len + 1]
         x = chunk[:-1]  # Input
-        y = chunk[1:]   # Target (shifted by 1)
+        y = chunk[1:]  # Target (shifted by 1)
         return x, y
 
 

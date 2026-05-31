@@ -51,7 +51,7 @@ def generate(model, tokenizer, device, prompt, args):
         for _ in range(args.max_tokens):
             idx = torch.tensor([generated], dtype=torch.long, device=device)
             if idx.shape[1] > CONFIG.max_seq_len:
-                idx = idx[:, -CONFIG.max_seq_len:]
+                idx = idx[:, -CONFIG.max_seq_len :]
             logits = model(idx)
             last_logits = logits[:, -1, :].clone()
 

@@ -1,6 +1,7 @@
 """
 Quantum — Multi-Head Self-Attention with RoPE + GQA + KV Cache.
 """
+
 import math
 
 import torch
@@ -60,9 +61,7 @@ class MultiHeadAttention(nn.Module):
         T_full = k.shape[2]
         scores = torch.matmul(q, k.transpose(-2, -1)) / self.scale
 
-        causal_mask = torch.triu(
-            torch.ones(T, T_full, device=x.device), diagonal=T_full - T + 1
-        ).bool()
+        causal_mask = torch.triu(torch.ones(T, T_full, device=x.device), diagonal=T_full - T + 1).bool()
         scores = scores.masked_fill(causal_mask, float("-inf"))
 
         if mask is not None:

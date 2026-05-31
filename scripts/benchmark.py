@@ -32,7 +32,7 @@ def load_model(checkpoint_path: str):
 
 def vram_used(device: torch.device) -> float:
     if device.type == "cuda":
-        return torch.cuda.memory_allocated(device) / 1024 ** 2
+        return torch.cuda.memory_allocated(device) / 1024**2
     return 0.0
 
 
@@ -73,7 +73,7 @@ def benchmark_generation(model, tokenizer, device, prompt: str, n_tokens: int = 
 
     vram = 0.0
     if device.type == "cuda":
-        vram = torch.cuda.max_memory_allocated(device) / 1024 ** 2
+        vram = torch.cuda.max_memory_allocated(device) / 1024**2
 
     return {
         "latency_ms": latency,

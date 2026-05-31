@@ -25,6 +25,7 @@ router = APIRouter()
 # Model loading
 # ---------------------------------------------------------------------------
 
+
 @lru_cache(maxsize=1)
 def get_model() -> tuple[QuantumModel, QuantumTokenizer] | None:
     tokenizer_path = Path("checkpoints/tokenizer.json")
@@ -52,6 +53,7 @@ def get_model() -> tuple[QuantumModel, QuantumTokenizer] | None:
 # Schemas
 # ---------------------------------------------------------------------------
 
+
 class ChatRequest(BaseModel):
     message: str
     max_new_tokens: int = 256
@@ -69,6 +71,7 @@ class ChatResponse(BaseModel):
 # ---------------------------------------------------------------------------
 # Generation helper
 # ---------------------------------------------------------------------------
+
 
 def generate_tokens(
     model: QuantumModel,
@@ -142,6 +145,7 @@ def generate_tokens(
 # Routes
 # ---------------------------------------------------------------------------
 
+
 @router.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     result = get_model()
@@ -154,11 +158,18 @@ async def chat(request: ChatRequest):
     if not request.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
     try:
-        tokens = list(generate_tokens(
-            model, tokenizer, request.message,
-            request.max_new_tokens, request.temperature,
-            request.top_k, request.top_p, request.repetition_penalty,
-        ))
+        tokens = list(
+            generate_tokens(
+                model,
+                tokenizer,
+                request.message,
+                request.max_new_tokens,
+                request.temperature,
+                request.top_k,
+                request.top_p,
+                request.repetition_penalty,
+            )
+        )
         return ChatResponse(response="".join(tokens), model_loaded=True)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -169,9 +180,11 @@ async def chat_stream(request: ChatRequest):
     result = get_model()
 
     if result is None:
+
         async def not_trained():
             yield "data: Quantum is not trained yet.\n\n"
             yield "data: [DONE]\n\n"
+
         return StreamingResponse(not_trained(), media_type="text/event-stream")
 
     model, tokenizer = result
@@ -182,9 +195,14 @@ async def chat_stream(request: ChatRequest):
     async def stream():
         try:
             for token in generate_tokens(
-                model, tokenizer, request.message,
-                request.max_new_tokens, request.temperature,
-                request.top_k, request.top_p, request.repetition_penalty,
+                model,
+                tokenizer,
+                request.message,
+                request.max_new_tokens,
+                request.temperature,
+                request.top_k,
+                request.top_p,
+                request.repetition_penalty,
             ):
                 yield f"data: {token}\n\n"
                 await asyncio.sleep(0)  # Yield control to event loop
