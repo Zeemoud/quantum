@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.git/
+.github/
+checkpoints/*.pt
+data/
+web/node_modules/
+web/dist/
+*.log
+.env
