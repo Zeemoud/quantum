@@ -6,11 +6,12 @@ Usage: python -m scripts.chat
 """
 
 import argparse
-import torch
-import torch.nn.functional as F
 from pathlib import Path
 
-from model import QuantumModel, CONFIG
+import torch
+import torch.nn.functional as F
+
+from model import CONFIG, QuantumModel
 from model.tokenizer import QuantumTokenizer
 
 

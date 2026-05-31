@@ -1,12 +1,12 @@
 """Tests for the Quantum model components."""
 
 import torch
-import pytest
+
 from model.config import QuantumConfig
-from model.transformer import QuantumModel
-from model.tokenizer import QuantumTokenizer
 from model.norm import RMSNorm
-from model.rope import RoPE, apply_rope, precompute_freqs
+from model.rope import apply_rope, precompute_freqs
+from model.tokenizer import QuantumTokenizer
+from model.transformer import QuantumModel
 
 
 def test_config_defaults():

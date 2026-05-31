@@ -2,11 +2,14 @@
 Quantum — Multi-Head Self-Attention with RoPE + GQA + KV Cache.
 """
 import math
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from .rope import RoPE
+
 from .kv_cache import KVCache
+from .rope import RoPE
+
 
 class MultiHeadAttention(nn.Module):
     def __init__(self, d_model: int, n_heads: int, n_kv_heads: int, max_seq_len: int, dropout: float = 0.1):

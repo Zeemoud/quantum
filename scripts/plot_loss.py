@@ -4,10 +4,11 @@ Reads loss values from checkpoint files and plots the training curve.
 Usage: python -m scripts.plot_loss
 """
 
-import torch
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import matplotlib.style as style
-from pathlib import Path
+import torch
 
 
 def load_checkpoints() -> list[tuple[int, float]]:

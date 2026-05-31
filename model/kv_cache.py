@@ -2,8 +2,9 @@
 Quantum — KV Cache for fast inference.
 """
 
-import torch
 from dataclasses import dataclass, field
+
+import torch
 
 
 @dataclass

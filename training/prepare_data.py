@@ -7,12 +7,11 @@ Usage:
     python -m training.prepare_data --max-articles 5000 --lang both
 """
 
-import re
 import argparse
-import urllib.request
+import re
 import urllib.error
+import urllib.request
 from pathlib import Path
-
 
 # ---------------------------------------------------------------------------
 # Cleaning
@@ -32,8 +31,8 @@ def clean_text(text: str) -> str:
     text = re.sub(r"\n{3,}", "\n\n", text)
     text = re.sub(r"[ \t]{2,}", " ", text)
     # Remove lines that are too short (navigation, categories, etc.)
-    lines = [l.strip() for l in text.splitlines()]
-    lines = [l for l in lines if len(l) > 40]
+    lines = [line.strip() for line in text.splitlines()]
+    lines = [line for line in lines if len(line) > 40]
     return "\n".join(lines).strip()
 
 

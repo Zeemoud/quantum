@@ -2,9 +2,10 @@
 Quantum — Dataset and DataLoader utilities.
 """
 
-import torch
-from torch.utils.data import Dataset, DataLoader
 from pathlib import Path
+
+import torch
+from torch.utils.data import DataLoader, Dataset
 
 
 class TextDataset(Dataset):

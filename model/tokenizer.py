@@ -4,8 +4,8 @@ Quantum tokenizer — Byte Pair Encoding (BPE) from scratch.
 
 import json
 import re
-from pathlib import Path
 from collections import defaultdict
+from pathlib import Path
 
 
 class QuantumTokenizer:

@@ -7,11 +7,12 @@ Usage: python -m scripts.benchmark
 
 import argparse
 import time
-import torch
-import torch.nn.functional as F
 from pathlib import Path
 
-from model import QuantumModel, CONFIG
+import torch
+import torch.nn.functional as F
+
+from model import CONFIG, QuantumModel
 from model.tokenizer import QuantumTokenizer
 
 
@@ -112,7 +113,7 @@ def main():
         if result["vram_mb"] > 0:
             print(f"  └─ VRAM peak     : {result['vram_mb']:.0f} MB")
         else:
-            print(f"  └─ VRAM          : N/A (CPU)")
+            print("  └─ VRAM          : N/A (CPU)")
         print()
 
     # Summary

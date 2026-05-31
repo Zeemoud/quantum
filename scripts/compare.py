@@ -4,11 +4,11 @@ Usage: python -m scripts.compare --a checkpoints/step_21000.pt --b checkpoints/s
 """
 
 import argparse
+
 import torch
 import torch.nn.functional as F
-from pathlib import Path
 
-from model import QuantumModel, CONFIG
+from model import CONFIG, QuantumModel
 from model.tokenizer import QuantumTokenizer
 
 

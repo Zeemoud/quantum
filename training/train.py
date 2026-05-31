@@ -3,15 +3,16 @@ Quantum — Training loop with mixed precision and gradient accumulation.
 Usage: python -m training.train
 """
 
+from pathlib import Path
+
 import torch
 import torch.nn as nn
-from pathlib import Path
 from tqdm import tqdm
 
-from model import QuantumModel, CONFIG
-from model.tokenizer import QuantumTokenizer
+from model import CONFIG, QuantumModel
 from model.config import QuantumConfig
-from training.dataset import load_text_file, build_dataloader
+from model.tokenizer import QuantumTokenizer
+from training.dataset import build_dataloader, load_text_file
 from training.evaluate import evaluate
 
 
@@ -162,7 +163,10 @@ def train():
         # Validation
         val_metrics = evaluate(model, val_loader, device)
         avg_train_loss = epoch_loss / len(train_loader)
-        print(f"\nEpoch {epoch} — train: {avg_train_loss:.4f} | val: {val_metrics['loss']:.4f} | ppl: {val_metrics['perplexity']:.2f}")
+        print(
+            f"\nEpoch {epoch} — train: {avg_train_loss:.4f} | "
+            f"val: {val_metrics['loss']:.4f} | ppl: {val_metrics['perplexity']:.2f}"
+        )
 
         if val_metrics["loss"] < best_val_loss:
             best_val_loss = val_metrics["loss"]

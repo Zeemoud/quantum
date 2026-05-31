@@ -4,19 +4,19 @@ POST /api/chat         — generate a response (standard)
 POST /api/chat/stream  — stream tokens one by one (SSE)
 """
 
-import torch
 import asyncio
 from functools import lru_cache
 from pathlib import Path
+
+import torch
+import torch.nn.functional as F
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from model import QuantumModel, CONFIG
-from model.tokenizer import QuantumTokenizer
+from model import CONFIG, QuantumModel
 from model.kv_cache import KVCache
-
-import torch.nn.functional as F
+from model.tokenizer import QuantumTokenizer
 
 router = APIRouter()
 

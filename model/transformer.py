@@ -8,8 +8,8 @@ import torch.nn.functional as F
 
 from .attention import MultiHeadAttention
 from .config import QuantumConfig
-from .norm import RMSNorm
 from .kv_cache import KVCache
+from .norm import RMSNorm
 
 
 class FeedForward(nn.Module):
@@ -28,7 +28,10 @@ class FeedForward(nn.Module):
 class TransformerBlock(nn.Module):
     def __init__(self, config: QuantumConfig):
         super().__init__()
-        self.attn = MultiHeadAttention(config.d_model, config.n_heads, config.n_kv_heads, config.max_seq_len, config.dropout)
+        self.attn = MultiHeadAttention(
+            config.d_model, config.n_heads, config.n_kv_heads,
+            config.max_seq_len, config.dropout,
+        )
         self.ff = FeedForward(config.d_model, config.d_ff, config.dropout)
         self.norm1 = RMSNorm(config.d_model)
         self.norm2 = RMSNorm(config.d_model)
