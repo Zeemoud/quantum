@@ -109,13 +109,24 @@ python -m scripts.compare --a checkpoints/step_10000.pt --b checkpoints/step_500
 
 ## Training results
 
-| Step  | Loss |
-| ----- | ---- |
-| 1000  | 3.43 |
-| 5000  | 0.52 |
-| 10000 | 0.28 |
-| 20000 | 0.15 |
-| 27000 | 0.10 |
+| Step  | Loss      |
+| ----- | --------- |
+| 1000  | 3.43      |
+| 5000  | 0.52      |
+| 10000 | 0.28      |
+| 20000 | 0.15      |
+| 30000 | 0.09      |
+| 40000 | 0.07      |
+| 50000 | **0.067** |
+
+## Benchmark (RTX 5060 Ti 16GB)
+
+| Metric     | Value  |
+| ---------- | ------ |
+| Tokens/sec | ~14    |
+| Latency    | ~50ms  |
+| VRAM       | 172 MB |
+| Parameters | 34M    |
 
 ## Roadmap
 
