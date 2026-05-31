@@ -1,5 +1,10 @@
 # Quantum
 
+[![CI](https://github.com/Zeemoud/quantum/actions/workflows/ci.yml/badge.svg)](https://github.com/Zeemoud/quantum/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Parameters](https://img.shields.io/badge/parameters-34M-purple.svg)]()
+
 An open-source conversational AI built entirely from scratch — no pretrained models, no external AI dependencies.
 
 Every component is hand-crafted: tokenizer, transformer architecture, training loop, and inference engine.
